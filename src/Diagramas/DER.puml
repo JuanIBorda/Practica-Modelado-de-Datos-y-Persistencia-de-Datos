@@ -3,6 +3,7 @@
 entity Cliente{
     PK Long id
     FK Long id_ubicacion
+    Int cantidad_pedidos_realizados
     varchar(255) nombre
     varchar(255) apellido
     varchar(255) email
@@ -60,13 +61,52 @@ entity Ubicacion{
     varchar(255) descripcion
 }
 
-entity Deposito{}
+entity Deposito{
+    FK Long id
+    FK Long id_ubicacion
+    varchar(255) nombre
+    varchar(255) descripcion
+}
 
-entity Empleado{}
+entity Empleado{
+    PK Long id
+    varchar(255) nombre
+    varchar(255) apellido
+    varchar(255) email
+    varchar(255) telefono
+    date fecha_nacimiento
+}
 
-entity Ventas{}
+entity Ventas{
+    PK Long id
+    FK Long id_pedido
+    FK Long id_empleado
+    FK Long id_cliente
+}
+
+entity Mercaderia_x_pedido{
+PK Long id
+    FK Long id_pedido
+    FK Long id_mercaderia
+    Float cantidad
+    Float peso_total
+}
+
+Cliente ||--|| Ubicacion
+Cliente ||--o{ Pedido
+Pedido ||--|{ Mercaderia_x_pedido
+Mercaderia ||--|{ Mercaderia_x_pedido
+Pedido }o--|| Envio
+Pedido }o--|| Entrega
+Pedido }o--|| Ventas
+Pedido }o--|| Deposito
+Pedido }o--|| Cliente
+
 
 
 @enduml
 
-
+Entity01 }|..|| Entity02
+Entity03 }o..o| Entity04
+Entity05 ||--o{ Entity06
+Entity07 |o--|| Entity08
