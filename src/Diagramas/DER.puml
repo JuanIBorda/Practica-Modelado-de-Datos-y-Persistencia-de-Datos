@@ -20,7 +20,7 @@ entity Pedido{
     Boolean es_entrega_a_direccion
     Float cantidad
     Float peso_total
-    Boolean estado
+    Varchar(255) estado
     Date fecha_pedido
     Boolean entregado
     Date fecha_entrega
@@ -34,11 +34,6 @@ entity Mercaderia{
     Float precio
 }
 
-entity Envio{
-    PK Long id
-    FK Long id_pedido
-    Varchar(255) estado
-}
 
 entity Entrega{
     FK Long id
@@ -92,17 +87,29 @@ PK Long id
     Float peso_total
 }
 
+entity Entrega_x_pedido{
+    PK Long id
+    FK Long id_pedido
+    FK Long id_entrega
+}
+
 Cliente ||--|| Ubicacion
 Cliente ||--o{ Pedido
-Pedido ||--|{ Mercaderia_x_pedido
+
 Mercaderia ||--|{ Mercaderia_x_pedido
-Pedido }o--|| Envio
-Pedido }o--|| Entrega
-Pedido }o--|| Ventas
+
+Pedido ||--|{ Mercaderia_x_pedido
 Pedido }o--|| Deposito
-Pedido }o--|| Cliente
+Pedido ||--|| Ubicacion
+Pedido ||--o{ Entrega_x_pedido
 
+Ventas ||--|{ Cliente
+Ventas }o--|| Pedido
 
+Empleado ||--o{ Ventas
+Entrega ||--o{ Entrega_x_pedido
+
+Deposito ||--|| Ubicacion
 
 @enduml
 
@@ -110,3 +117,9 @@ Entity01 }|..|| Entity02
 Entity03 }o..o| Entity04
 Entity05 ||--o{ Entity06
 Entity07 |o--|| Entity08
+
+entity Envio{
+    PK Long id
+    FK Long id_pedido
+    Varchar(255) estado
+}
