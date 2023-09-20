@@ -1,0 +1,105 @@
+@startuml
+
+Cliente --> Ubicacion
+
+Pedido --> Cliente
+Pedido -->"*" Mercaderia
+Pedido --> Deposito
+Pedido --> Ubicacion
+
+Envio --> Pedido
+Entrega --> Pedido
+Entrega --> Cliente
+Entrega --> Ubicacion
+
+Venta --> Cliente
+Venta --> Pedido
+Venta --> Empleado
+
+class Cliente{
+
+     Ubicacion
+    Int cantidad_pedidos_realizados
+    String nombre
+    String apellido
+    String email
+    String telefono
+    date fecha_nacimiento
+}
+
+class Pedido{
+
+     Cliente
+     List<Mercaderia> mercaderias
+     Ubicacion ubicacionDeEntrega
+     Deposito depositoDeRetiro
+    Boolean es_entrega_a_direccion
+    Float cantidad
+    Float peso_total
+    Boolean estado
+    Date fecha_pedido
+    Boolean entregado
+    Date fecha_entrega
+}
+
+class Mercaderia{
+
+    String nombre
+    String descripcion
+    Float peso
+    Float precio
+}
+
+
+
+class Envio{
+
+    Pedido pedido
+    String estado
+}
+
+class Entrega{
+
+     Pedido
+Cliente
+     Ubicacion
+    Date fecha_entrega
+    Boolean estado
+}
+
+
+class Ubicacion{
+
+    String calle
+    String numero
+    String localidad
+    String provincia
+    String pais
+    String codigo_postal
+    String descripcion
+}
+
+class Deposito{
+
+    Ubicacion Ubicacion
+    String nombre
+    String descripcion
+}
+
+class Empleado{
+
+    String nombre
+    String apellido
+    String email
+    String telefono
+    date fecha_nacimiento
+}
+
+class Venta{
+    Empleado vendedor
+     Pedido pedido
+     Cliente cliente
+}
+
+
+@enduml
