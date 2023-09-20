@@ -42,6 +42,19 @@ class Pedido{
     Date fecha_entrega
 }
 
+interface Pedido{
+getPrecioTotal()
+}
+
+class PedidoConcreto implements Pedido{
+}
+
+class PedidoCompleto implements Pedido{
+List<Pedido> pedidos
+}
+
+PedidoCompleto --> Pedido
+
 class Mercaderia{
 
     String nombre
@@ -100,6 +113,11 @@ class Venta{
      Pedido pedido
      Cliente cliente
 }
+
+
+
+
+
 
 
 @enduml
