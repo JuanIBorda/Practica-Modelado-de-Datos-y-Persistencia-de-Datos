@@ -1,0 +1,24 @@
+@startuml
+
+entity Cliente{
+    PK Long id
+    varchar(255) nombre
+    varchar(255) apellido
+}
+
+entity Mercaderia{}
+
+entity Pedido{}
+
+entity Envio{}
+
+entity Ubicacion{}
+
+entity Deposito{}
+
+entity Empleado{}
+
+
+@enduml
+
+
