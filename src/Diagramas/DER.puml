@@ -2,21 +2,69 @@
 
 entity Cliente{
     PK Long id
+    FK Long id_ubicacion
     varchar(255) nombre
     varchar(255) apellido
+    varchar(255) email
+    varchar(255) telefono
+    date fecha_nacimiento
 }
 
-entity Mercaderia{}
+entity Pedido{
+    PK Long id
+    FK Long id_cliente
+    FK Long id_mercaderia
+    FK Long id_direccion_entrega
+    FK Long id_deposito
+    Boolean es_entrega_a_direccion
+    Float cantidad
+    Float peso_total
+    Boolean estado
+    Date fecha_pedido
+    Boolean entregado
+    Date fecha_entrega
+}
 
-entity Pedido{}
+entity Mercaderia{
+    FK Long id
+    varchar(255) nombre
+    varchar(255) descripcion
+    Float peso
+    Float precio
+}
 
-entity Envio{}
+entity Envio{
+    PK Long id
+    FK Long id_pedido
+    Varchar(255) estado
+}
 
-entity Ubicacion{}
+entity Entrega{
+    FK Long id
+    FK Long id_pedido
+    FK Long id_cliente
+    FK Long id_ubicacion
+    Date fecha_entrega
+    Boolean estado
+}
+
+
+entity Ubicacion{
+    FK Long id
+    varchar(255) calle
+    varchar(255) numero
+    varchar(255) localidad
+    varchar(255) provincia
+    varchar(255) pais
+    varchar(255) codigo_postal
+    varchar(255) descripcion
+}
 
 entity Deposito{}
 
 entity Empleado{}
+
+entity Ventas{}
 
 
 @enduml
