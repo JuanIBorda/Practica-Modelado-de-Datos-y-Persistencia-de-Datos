@@ -20,7 +20,7 @@ entity Pedido{
     Boolean es_entrega_a_direccion
     Float cantidad
     Float peso_total
-    Varchar(255) estado
+    varchar(255) estado
     Date fecha_pedido
     Boolean entregado
     Date fecha_entrega
@@ -46,13 +46,11 @@ entity Entrega{
 
 
 entity Ubicacion{
-    FK Long id
+    PK Long id
+    FK Long id_localidad
+    FK Long id_provincia
     varchar(255) calle
     varchar(255) numero
-    varchar(255) localidad
-    varchar(255) provincia
-    varchar(255) pais
-    varchar(255) codigo_postal
     varchar(255) descripcion
 }
 
@@ -63,53 +61,52 @@ entity Deposito{
     varchar(255) descripcion
 }
 
-entity Empleado{
-    PK Long id
-    varchar(255) nombre
-    varchar(255) apellido
-    varchar(255) email
-    varchar(255) telefono
-    date fecha_nacimiento
-}
-
-entity Ventas{
-    PK Long id
-    FK Long id_pedido
-    FK Long id_empleado
-    FK Long id_cliente
-}
-
 entity Mercaderia_x_pedido{
 PK Long id
     FK Long id_pedido
     FK Long id_mercaderia
     Float cantidad
     Float peso_total
+    FK id_entrega
 }
 
 entity Entrega_x_pedido{
     PK Long id
     FK Long id_pedido
     FK Long id_entrega
+    Int cantidad_entregada
 }
+
+entity Localidad{
+    PK Long id
+    varchar(255) nombre
+    varchar(255) codigo_postal
+}
+
+entity Provincia{
+    PK Long id
+    varchar(255) nombre
+}
+
+Localidad ||--o{ Ubicacion
+Provincia ||--o{ Ubicacion
+
 
 Cliente ||--|| Ubicacion
 Cliente ||--o{ Pedido
 
 Mercaderia ||--|{ Mercaderia_x_pedido
 
+Mercaderia_x_pedido ||--|{ Entrega_x_pedido
+
 Pedido ||--|{ Mercaderia_x_pedido
 Pedido }o--|| Deposito
 Pedido ||--|| Ubicacion
-Pedido ||--o{ Entrega_x_pedido
 
-Ventas ||--|{ Cliente
-Ventas }o--|| Pedido
-
-Empleado ||--o{ Ventas
 Entrega ||--o{ Entrega_x_pedido
 
 Deposito ||--|| Ubicacion
+Ubicacion ||--o{ Entrega
 
 @enduml
 
